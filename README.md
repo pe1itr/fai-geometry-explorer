@@ -33,6 +33,33 @@ documented. This project should therefore be treated as research software: it
 is useful for exploring hypotheses and antenna directions, but it is not a
 validated propagation model.
 
+## Historical indications of FAI activity
+
+The DUBUS articles also describe empirical indications of when FAI was most
+often observed. These reports do not establish a reliable forecast, but they
+may be useful when planning an experiment:
+
+- DUBUS 3/86 reports a general European FAI season from the beginning of May
+  until the beginning of September. In the Italian observations from 1985,
+  contacts occurred almost daily between 20 May and 30 June.
+- Openings were reported most frequently from late afternoon into the early
+  evening, with approximately 16:30–20:00 UTC identified as the best period in
+  that Italian dataset.
+- The same article notes that FAI occurred in the Sporadic-E season and was
+  commonly observed after Es on the lower television channels. It also cites a
+  US observation from 1980 in which FAI occurred on 53% of evenings following
+  50 MHz Sporadic-E.
+- DUBUS 3/87 reports signals on 10 of 16 test days during the Budapest test
+  series from 28 June to 12 July 1987, including two runs of three consecutive
+  days. A second test period from 1 to 9 August produced noticeably less
+  activity.
+
+Taken together, these historical reports suggest watching for FAI after an Es
+opening, particularly during the late afternoon and early evening in late
+spring and summer. This is an operating indication only: an Es opening, a
+particular month, or a particular time of day does not guarantee that FAI will
+occur.
+
 ## Example
 
 The map below shows a Dual Station calculation between JN58KH and KM27AW. The
