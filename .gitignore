@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+dist/
+build/
+
+# Local reference and validation material
+/dubus/
+/dubus2/
+/mp3/
+/data/
+/tests/
+/docs/

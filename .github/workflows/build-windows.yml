@@ -1,0 +1,75 @@
+name: Build Windows application
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install application and build tools
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install ".[build]"
+
+      - name: Build Windows executable
+        shell: pwsh
+        run: |
+          python -m PyInstaller `
+            --noconfirm `
+            --clean `
+            --onefile `
+            --windowed `
+            --name "FAI-Geometry-Explorer" `
+            --collect-data "fai_explorer" `
+            --collect-data "ppigrf" `
+            "fai_gui_launcher.py"
+
+      - name: Create Windows distribution ZIP
+        shell: pwsh
+        run: |
+          $PackageDirectory = "dist/FAI-Geometry-Explorer-Windows"
+          New-Item -ItemType Directory -Path $PackageDirectory -Force
+          Copy-Item "dist/FAI-Geometry-Explorer.exe" $PackageDirectory
+          Copy-Item "README.md" $PackageDirectory
+          Copy-Item "LICENSE" $PackageDirectory
+          Compress-Archive `
+            -Path "$PackageDirectory/*" `
+            -DestinationPath "dist/FAI-Geometry-Explorer-Windows.zip" `
+            -Force
+
+      - name: Upload test build
+        uses: actions/upload-artifact@v7
+        with:
+          name: FAI-Geometry-Explorer-Windows
+          path: dist/FAI-Geometry-Explorer-Windows.zip
+          if-no-files-found: error
+
+      - name: Publish tagged build as GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ github.ref_name }}" `
+            "dist/FAI-Geometry-Explorer-Windows.zip" `
+            --title "FAI Geometry Explorer ${{ github.ref_name }}" `
+            --generate-notes

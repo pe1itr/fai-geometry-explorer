@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fai-geometry-explorer"
+version = "0.1.0"
+description = "Geometrische rekenkern voor Field Aligned Irregularity-scatter"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [{ name = "FAI Geometry Explorer contributors" }]
+dependencies = [
+    "numpy>=1.26",
+    "pandas>=2.0",
+    "ppigrf==2.1.0",
+    "matplotlib>=3.8",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+build = ["pyinstaller>=6.21,<7"]
+
+[project.scripts]
+fai-geometry = "fai_explorer.cli:main"
+fai-geometry-gui = "fai_explorer.gui:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+fai_explorer = ["data/*.json", "data/*.md"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
